@@ -1,27 +1,25 @@
 package com.dicoding.picodiploma.mysubmission
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import kotlinx.android.synthetic.main.activity_detail_movie.iv_movie_poster
-import kotlinx.android.synthetic.main.item_row_list.*
+import kotlinx.android.synthetic.main.layout_detail_mov.*
 
 class DetailMovieActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_SELECTED_MOVIE = "extra_selected_value"
+        const val EXTRA_SELECTED_VALUE = "extra_selected_value"
+        const val EXTRA_TYPE = "extra_type"
     }
-
-    private lateinit var rating: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.setTitle("")
+        supportActionBar?.title = ""
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener(View.OnClickListener {
@@ -29,7 +27,14 @@ class DetailMovieActivity : AppCompatActivity() {
         })
 
 
-        val movie = intent.getParcelableExtra(EXTRA_SELECTED_MOVIE) as Movie
+        var index = intent.getIntExtra(EXTRA_TYPE, 3)
+        if (index == 1) {
+            directors_title.text = resources.getString(R.string.creators)
+            writers_title.text = resources.getString(R.string.starring)
+            studio_title.text = resources.getString(R.string.tv_network)
+        }
+
+        val movie = intent.getParcelableExtra(EXTRA_SELECTED_VALUE) as Movie
         Glide
             .with(this)
             .load(movie.poster)

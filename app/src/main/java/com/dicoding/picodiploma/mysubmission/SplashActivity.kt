@@ -1,11 +1,11 @@
 package com.dicoding.picodiploma.mysubmission
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 
-class SpalshActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,8 +13,9 @@ class SpalshActivity : AppCompatActivity() {
 
         val handler = Handler()
         handler.postDelayed({
-            val splashIntent = Intent(this@SpalshActivity, MainActivity::class.java)
+            val splashIntent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(splashIntent)
+            finish()
         }, 1000)
     }
 }

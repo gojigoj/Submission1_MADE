@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bgapp"
-        android:alpha="0.26"/>
+        android:alpha="0.2"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -22,7 +22,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/purplePrimary"
+            android:background="@color/colorPrimaryDark"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             android:elevation="6dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -48,48 +50,28 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:fillViewport="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ll_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="28dp"
-                android:orientation="vertical"
-                android:gravity="center">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="@color/grayPrimary"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabSelectedTextColor="@android:color/white"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/title_main"
-                    android:fontFamily="@font/msemibold"
-                    android:textColor="@android:color/white"
-                    android:textSize="22sp"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-                <TextView
-                    android:id="@+id/main_date_now"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dummy_date"
-                    android:fontFamily="@font/mlight"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/lv_list"
-                android:layout_below="@id/ll_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
