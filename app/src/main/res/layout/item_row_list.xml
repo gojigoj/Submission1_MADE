@@ -75,7 +75,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@android:color/white"
-                    android:background="@drawable/time_icon"/>
+                    android:background="@drawable/ic_date_range"/>
 
                 <TextView
                     android:id="@+id/tv_runtime"
@@ -84,7 +84,7 @@
                     android:textSize="16sp"
                     android:fontFamily="@font/mmedium"
                     android:textColor="@android:color/white"
-                    tools:text="@string/movie_time"/>
+                    tools:text="@string/movie_release"/>
 
             </LinearLayout>
 

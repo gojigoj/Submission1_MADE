@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bgapp"
         android:alpha="0.2"/>
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

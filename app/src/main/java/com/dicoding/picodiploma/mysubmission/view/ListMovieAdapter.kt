@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.mysubmission
+package com.dicoding.picodiploma.mysubmission.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.dicoding.picodiploma.mysubmission.model.Movie
+import com.dicoding.picodiploma.mysubmission.R
 import kotlinx.android.synthetic.main.item_row_list.view.*
 
-class ListMovieAdapter(private val listMovie: ArrayList<Movie>) :
-    RecyclerView.Adapter<ListMovieAdapter.ListViewHolder>() {
+class ListMovieAdapter : RecyclerView.Adapter<ListMovieAdapter.ListViewHolder>() {
+    private val listMovie = ArrayList<Movie>()
+
     private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setData(items: ArrayList<Movie>) {
+        listMovie.clear()
+        listMovie.addAll(items)
+        notifyDataSetChanged()
+    }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -36,8 +45,8 @@ class ListMovieAdapter(private val listMovie: ArrayList<Movie>) :
                     .apply(RequestOptions().override(80, 120))
                     .into(iv_movie_poster)
                 tv_title.text = movie.title
-                tv_rating.text = movie.rating
-                tv_runtime.text = movie.runtime
+                tv_rating.text = resources.getString(R.string.movie_rating, movie.rating)
+                tv_runtime.text = movie.release
 
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(movie) }
             }
@@ -47,4 +56,5 @@ class ListMovieAdapter(private val listMovie: ArrayList<Movie>) :
     interface OnItemClickCallback {
         fun onItemClicked(data: Movie)
     }
+
 }
