@@ -26,7 +26,7 @@ class FavoriteFragment : Fragment() {
                 childFragmentManager
             )
         view.view_pager.adapter = sectionPagerAdapter
-        view.tabs.setupWithViewPager(view_pager)
+        view.tabs.setupWithViewPager(view.view_pager)
 
         return view
     }
