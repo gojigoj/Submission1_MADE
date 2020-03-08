@@ -6,8 +6,12 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.dicoding.picodiploma.mysubmission.R
+import com.dicoding.picodiploma.mysubmission.view.adapter.SectionPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,14 +22,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
 
-        val sectionPagerAdapter =
-            SectionPagerAdapter(
-                this,
-                supportFragmentManager
-            )
-        view_pager.adapter = sectionPagerAdapter
-        tabs.setupWithViewPager(view_pager)
-        supportActionBar?.elevation = 0f
+        val navController = findNavController(R.id.nav_host_fragment)
+        bottom_navigation.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

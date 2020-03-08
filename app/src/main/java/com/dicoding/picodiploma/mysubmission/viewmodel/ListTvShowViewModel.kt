@@ -69,7 +69,7 @@ class ListTvShowViewModel : ViewModel() {
         })
     }
 
-    internal fun getTvSeries(): LiveData<ArrayList<Movie>> {
+    internal fun getTvShows(): LiveData<ArrayList<Movie>> {
         return listTvShows
     }
 }

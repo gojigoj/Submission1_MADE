@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgapp"
         android:alpha="0.2"/>
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -34,8 +33,9 @@
                 android:id="@+id/tv_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/app_title"
+                android:layout_gravity="start"
+                android:layout_marginStart="20dp"
+                tools:text="@string/app_title"
                 android:textSize="22sp"
                 android:fontFamily="@font/mazzardh_sm"
                 android:textColor="@android:color/white"/>
@@ -44,37 +44,32 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested"
+    <View
+        android:id="@+id/botnav_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purpleDark"
+        android:layout_above="@id/bottom_navigation"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        app:menu="@menu/botnav_menu"
+        app:itemIconTint="@drawable/botnav_color"
+        app:itemTextColor="@drawable/botnav_color"/>
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:tabMode="fixed"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/grayPrimary"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabSelectedTextColor="@android:color/white"/>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        app:defaultNavHost="true"
+        android:layout_below="@id/appbar"
+        android:layout_above="@id/botnav_divider"
+        app:navGraph="@navigation/mobile_navigation"/>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

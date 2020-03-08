@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.mysubmission.view
+package com.dicoding.picodiploma.mysubmission.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.dicoding.picodiploma.mysubmission.model.Movie
 import com.dicoding.picodiploma.mysubmission.R
 import kotlinx.android.synthetic.main.item_row_list.view.*
 
-class ListMovieAdapter : RecyclerView.Adapter<ListMovieAdapter.ListViewHolder>() {
+class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ListViewHolder>() {
     private val listMovie = ArrayList<Movie>()
 
     private var onItemClickCallback: OnItemClickCallback? = null

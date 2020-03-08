@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.mysubmission.view
+package com.dicoding.picodiploma.mysubmission.view.adapter
 
 import android.content.Context
 import androidx.annotation.StringRes
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.dicoding.picodiploma.mysubmission.R
+import com.dicoding.picodiploma.mysubmission.view.fragment.ItemMoviesFragment
 
 class SectionPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -17,7 +18,7 @@ class SectionPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     )
 
     override fun getItem(position: Int): Fragment {
-        return MoviesFragment.newInstance(position)
+        return ItemMoviesFragment.newInstance(position)
 
     }
 

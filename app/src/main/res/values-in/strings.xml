@@ -4,6 +4,7 @@
 
     <string name="tab_title_1">Film</string>
     <string name="tab_title_2">Serial TV</string>
+    <string name="title_3">Favorit</string>
 
     <string name="menu_1">English</string>
     <string name="menu_2">Indonesia</string>
@@ -35,5 +36,7 @@
     <string name="rating">Peringkat</string>
     <string name="poster_film">Poster Film</string>
     <string name="icon_app">Icon App</string>
+
+    <string name="content_tab_text">Ini tab</string>
 
 </resources>

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.picodiploma.mysubmission.BuildConfig
 import com.dicoding.picodiploma.mysubmission.model.Movie
+import com.dicoding.picodiploma.mysubmission.util.util
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -16,120 +17,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainViewModel : ViewModel() {
+class itemViewModel : ViewModel() {
 
     companion object {
         private const val API_KEY = BuildConfig.TMDB_API_KEY
-
-        private const val DATE_FORMAT = "yyyy-MM-dd"
-        private const val NEW_DATE_FORMAT = "dd MMMM yyyy"
     }
-
-    val listMovies = MutableLiveData<ArrayList<Movie>>()
-    val listTvSeries = MutableLiveData<ArrayList<Movie>>()
     val itemMovie = MutableLiveData<Movie>()
-    val itemTvSeries = MutableLiveData<Movie>()
-
-    fun setMovies(context: Context) {
-        val client = AsyncHttpClient()
-        val listMovieItems = ArrayList<Movie>()
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$API_KEY&language=en-US"
-        client.get(url, object : AsyncHttpResponseHandler() {
-            override fun onSuccess(
-                statusCode: Int,
-                headers: Array<out Header>?,
-                responseBody: ByteArray
-            ) {
-                val result = String(responseBody)
-                try {
-                    val responseObject = JSONObject(result)
-                    val list = responseObject.getJSONArray("results")
-
-                    for (i in 0 until list.length()) {
-                        val movie = list.getJSONObject(i)
-                        val moviesItem = Movie()
-                        moviesItem.id = movie.getInt("id")
-                        val linkPoster = movie.getString("poster_path")
-                        moviesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
-                        moviesItem.title = movie.getString("title")
-                        moviesItem.rating = movie.getDouble("vote_average").toString()
-                        moviesItem.release = changeDateFormat(movie.getString("release_date"))
-                        listMovieItems.add(moviesItem)
-                    }
-                    listMovies.postValue(listMovieItems)
-                } catch (e: Exception) {
-                    showToast(context, e.message.toString())
-                    e.printStackTrace()
-                }
-            }
-
-            override fun onFailure(
-                statusCode: Int,
-                headers: Array<out Header>?,
-                responseBody: ByteArray?,
-                error: Throwable
-            ) {
-                val errorMessage = when (statusCode) {
-                    401 -> "$statusCode: Invalid API key"
-                    404 -> "$statusCode: The resource you requested could not be found."
-                    else -> "$statusCode: ${error.message}"
-                }
-                showToast(context, errorMessage)
-            }
-
-        })
-    }
-
-    fun setTvSeries(context: Context) {
-        val client = AsyncHttpClient()
-        val url = "https://api.themoviedb.org/3/discover/tv?api_key=$API_KEY&language=en-US"
-        val listTvSeriesItem = ArrayList<Movie>()
-        client.get(url, object : AsyncHttpResponseHandler() {
-            override fun onSuccess(
-                statusCode: Int,
-                headers: Array<out Header>?,
-                responseBody: ByteArray
-            ) {
-                val result = String(responseBody)
-                try {
-                    val responseObject = JSONObject(result)
-                    val list = responseObject.getJSONArray("results")
-
-                    for (i in 0 until list.length()) {
-                        val tvSeries = list.getJSONObject(i)
-                        val tvSeriesItem = Movie()
-                        tvSeriesItem.id = tvSeries.getInt("id")
-                        val linkPoster = tvSeries.getString("poster_path")
-                        tvSeriesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
-                        tvSeriesItem.title = tvSeries.getString("name")
-                        tvSeriesItem.rating = tvSeries.getDouble("vote_average").toString()
-                        tvSeriesItem.release =
-                            changeDateFormat(tvSeries.getString("first_air_date"))
-                        listTvSeriesItem.add(tvSeriesItem)
-                    }
-                    listTvSeries.postValue(listTvSeriesItem)
-                } catch (e: Exception) {
-                    showToast(context, e.message.toString())
-                    e.printStackTrace()
-                }
-            }
-
-            override fun onFailure(
-                statusCode: Int,
-                headers: Array<out Header>?,
-                responseBody: ByteArray?,
-                error: Throwable
-            ) {
-                val errorMessage = when (statusCode) {
-                    401 -> "$statusCode: Invalid API key"
-                    404 -> "$statusCode: The resource you requested could not be found."
-                    else -> "$statusCode: ${error.message}"
-                }
-                showToast(context, errorMessage)
-            }
-
-        })
-    }
+    val itemTvShows = MutableLiveData<Movie>()
 
     fun setMovieItem(context: Context, data: Movie) {
         val client = AsyncHttpClient()
@@ -171,7 +65,7 @@ class MainViewModel : ViewModel() {
                     }
                     setMovieCredit(context, data)
                 } catch (e: Exception) {
-                    showToast(context, e.message.toString())
+                    util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -187,7 +81,7 @@ class MainViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                showToast(context, errorMessage)
+                util.showToast(context, errorMessage)
             }
 
         })
@@ -227,7 +121,7 @@ class MainViewModel : ViewModel() {
                     itemMovie.postValue(data)
 
                 } catch (e: Exception) {
-                    showToast(context, e.message.toString())
+                    util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -243,13 +137,13 @@ class MainViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                showToast(context, errorMessage)
+                util.showToast(context, errorMessage)
             }
 
         })
     }
 
-    fun setTvSeriesItem(context: Context, data: Movie) {
+    fun setTvShowsItem(context: Context, data: Movie) {
         val client = AsyncHttpClient()
         val genres = ArrayList<String>()
         val creators = ArrayList<String>()
@@ -300,10 +194,10 @@ class MainViewModel : ViewModel() {
                         }
                         data.directors = creators.joinToString(separator = ", ")
                     }
-                    setTvSeriesCredit(context, data)
+                    setTvShowsCredit(context, data)
 
                 } catch (e: Exception) {
-                    showToast(context, e.message.toString())
+                    util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -319,13 +213,13 @@ class MainViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                showToast(context, errorMessage)
+                util.showToast(context, errorMessage)
             }
 
         })
     }
 
-    fun setTvSeriesCredit(context: Context, data: Movie) {
+    fun setTvShowsCredit(context: Context, data: Movie) {
         val client = AsyncHttpClient()
         val listCast = ArrayList<String>()
         val url =
@@ -354,9 +248,9 @@ class MainViewModel : ViewModel() {
                         }
                         data.writers = listCast.joinToString(separator = ", ")
                     }
-                    itemTvSeries.postValue(data)
+                    itemTvShows.postValue(data)
                 } catch (e: Exception) {
-                    showToast(context, e.message.toString())
+                    util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -372,41 +266,17 @@ class MainViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                showToast(context, errorMessage)
+                util.showToast(context, errorMessage)
             }
 
         })
-    }
-
-    internal fun getMovies(): LiveData<ArrayList<Movie>> {
-        return listMovies
-    }
-
-    internal fun getTvSeries(): LiveData<ArrayList<Movie>> {
-        return listTvSeries
     }
 
     internal fun getMovieItem(): LiveData<Movie> {
         return itemMovie
     }
 
-    internal fun getTvSeriesItem(): LiveData<Movie> {
-        return itemTvSeries
+    internal fun getTvShowsItem(): LiveData<Movie> {
+        return itemTvShows
     }
-
-    private fun changeDateFormat(dateMovie: String): String {
-        return try {
-            val format = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-            val dateMov = format.parse(dateMovie)
-            val newFormat = SimpleDateFormat(NEW_DATE_FORMAT, Locale.getDefault())
-            return newFormat.format(dateMov)
-        } catch (e: ParseException) {
-            e.printStackTrace().toString()
-        }
-    }
-
-    private fun showToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
 }

@@ -10,17 +10,19 @@ import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.mysubmission.R
 import com.dicoding.picodiploma.mysubmission.model.Movie
 import com.dicoding.picodiploma.mysubmission.util.EspressoIdlingResource
-import com.dicoding.picodiploma.mysubmission.viewmodel.MainViewModel
+import com.dicoding.picodiploma.mysubmission.viewmodel.itemViewModel
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.layout_detail_mov.*
 
 class DetailMovieActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var itemViewModel: itemViewModel
 
     companion object {
         const val EXTRA_SELECTED_VALUE = "extra_selected_value"
         const val EXTRA_TYPE = "extra_type"
+        const val MOVIE_INDEX = 0
+        const val TVSHOW_INDEX = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +37,10 @@ class DetailMovieActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        mainViewModel = ViewModelProvider(
+        itemViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel::class.java)
+        ).get(itemViewModel::class.java)
 
         val movie = intent.getParcelableExtra(EXTRA_SELECTED_VALUE) as Movie
 
@@ -59,10 +61,10 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun getMovieItem(context: Context, movie: Movie) {
         EspressoIdlingResource.increment()
-        mainViewModel.setMovieItem(context, movie)
+        itemViewModel.setMovieItem(context, movie)
         showLoading(true)
 
-        mainViewModel.getMovieItem().observe(this, Observer { movieItem ->
+        itemViewModel.getMovieItem().observe(this, Observer { movieItem ->
             if (movieItem != null) {
                 initView(movieItem)
                 showLoading(false)
@@ -73,10 +75,10 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun getTvSeriesItem(context: Context, movie: Movie) {
         EspressoIdlingResource.increment()
-        mainViewModel.setTvSeriesItem(context, movie)
+        itemViewModel.setTvShowsCredit(context, movie)
         showLoading(true)
 
-        mainViewModel.getTvSeriesItem().observe(this, Observer { tvSeriesItem ->
+        itemViewModel.getTvShowsItem().observe(this, Observer { tvSeriesItem ->
             if (tvSeriesItem != null) {
                 initView(tvSeriesItem)
                 showLoading(false)

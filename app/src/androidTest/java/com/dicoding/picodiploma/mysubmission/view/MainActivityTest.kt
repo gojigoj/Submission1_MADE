@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.dicoding.picodiploma.mysubmission.R
 import com.dicoding.picodiploma.mysubmission.util.EspressoIdlingResource
+import com.dicoding.picodiploma.mysubmission.view.adapter.ListItemAdapter
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
@@ -48,7 +49,7 @@ class MainActivityTest {
         for (i in 0 until itemCount - 1) {
             onView(allOf(isDisplayed(), withId(R.id.rv_list)))
                 .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<ListMovieAdapter.ListViewHolder>(
+                    RecyclerViewActions.actionOnItemAtPosition<ListItemAdapter.ListViewHolder>(
                         i,
                         click()
                     )
@@ -78,7 +79,7 @@ class MainActivityTest {
         for (i in 0 until itemCount - 1) {
             onView(allOf(isDisplayed(), withId(R.id.rv_list)))
                 .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<ListMovieAdapter.ListViewHolder>(
+                    RecyclerViewActions.actionOnItemAtPosition<ListItemAdapter.ListViewHolder>(
                         i,
                         click()
                     )

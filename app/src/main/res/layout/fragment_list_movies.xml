@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.ListMoviesFragment">
+    tools:context=".view.fragment.ItemMoviesFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
         tools:text="@string/tab_title_2" />
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/rv_list"-->
