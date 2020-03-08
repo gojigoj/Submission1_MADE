@@ -2,7 +2,8 @@
     <string name="app_name">MySubmission</string>
 
     <string name="tab_title_1">Movies</string>
-    <string name="tab_title_2">Tv Show</string>
+    <string name="tab_title_2">Tv Shows</string>
+    <string name="title_3">Favorite</string>
 
     <string name="menu_1">English</string>
     <string name="menu_2">Indonesia</string>
@@ -291,5 +292,7 @@
         <item>Netflix</item>
         <item>AMC</item>
     </string-array>
+
+    <string name="content_tab_text">This is tab</string>
 
 </resources>
