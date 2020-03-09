@@ -9,21 +9,31 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dicoding.picodiploma.mysubmission.R
+import com.dicoding.picodiploma.mysubmission.model.db.MovieHelper
 import com.dicoding.picodiploma.mysubmission.view.adapter.SectionPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var movieHelper: MovieHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        movieHelper = MovieHelper.getInstance(applicationContext)
+        movieHelper.open()
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
 
         val navController = findNavController(R.id.nav_host_fragment)
         bottom_navigation.setupWithNavController(navController)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,5 +48,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(mIntent)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        movieHelper.close()
     }
 }

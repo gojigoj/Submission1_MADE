@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class itemViewModel : ViewModel() {
+class ItemViewModel : ViewModel() {
 
     companion object {
         private const val API_KEY = BuildConfig.TMDB_API_KEY

@@ -36,6 +36,8 @@
     <string name="rating">Peringkat</string>
     <string name="poster_film">Poster Film</string>
     <string name="icon_app">Icon App</string>
+    <string name="no_data_favorite">Tidak ada %1$s favorit</string>
+
 
     <string name="content_tab_text">Ini tab</string>
 

@@ -11,14 +11,27 @@ import com.dicoding.picodiploma.mysubmission.R
 import kotlinx.android.synthetic.main.item_row_list.view.*
 
 class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ListViewHolder>() {
-    private val listMovie = ArrayList<Movie>()
 
     private var onItemClickCallback: OnItemClickCallback? = null
 
-    fun setData(items: ArrayList<Movie>) {
-        listMovie.clear()
-        listMovie.addAll(items)
-        notifyDataSetChanged()
+    var listMovie = ArrayList<Movie>()
+        set(listMovie) {
+            if (listMovie.size > 0) {
+                this.listMovie.clear()
+            }
+            this.listMovie.addAll(listMovie)
+            notifyDataSetChanged()
+        }
+
+    fun addItem(movie: Movie) {
+        this.listMovie.add(movie)
+        notifyItemInserted(this.listMovie.size - 1)
+    }
+
+    fun removeItem(position: Int) {
+        this.listMovie.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, this.listMovie.size)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -48,13 +61,13 @@ class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ListViewHolder>() {
                 tv_rating.text = resources.getString(R.string.movie_rating, movie.rating)
                 tv_runtime.text = movie.release
 
-                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(movie) }
+                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(movie, adapterPosition) }
             }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Movie)
+        fun onItemClicked(data: Movie, position: Int)
     }
 
 }

@@ -135,10 +135,42 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_movie_desc" />
+
+        <LinearLayout
+            android:id="@+id/btn_fav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="24dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:background="@drawable/shape_btn_inactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_detail_mov">
+
+            <ImageView
+                android:id="@+id/iv_btn_fav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favorite_border"/>
+
+            <TextView
+                android:id="@+id/tv_btn_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_3"
+                android:layout_marginStart="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -151,6 +183,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintVertical_bias="0.32999998" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

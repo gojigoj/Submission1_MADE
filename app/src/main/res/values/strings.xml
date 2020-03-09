@@ -35,6 +35,7 @@
     <string name="rating">Rating</string>
     <string name="poster_film">Movie poster</string>
     <string name="icon_app">Icon App</string>
+    <string name="no_data_favorite">There are no favorite %1$s</string>
 
     <string name="content_tab_text">This is tab</string>
 

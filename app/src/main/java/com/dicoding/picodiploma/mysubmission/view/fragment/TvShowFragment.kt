@@ -50,13 +50,15 @@ class TvShowFragment : Fragment() {
         val listMoviesAdapter = ListItemAdapter()
         listMoviesAdapter.notifyDataSetChanged()
 
+//        EspressoIdlingResource.increment()
         tvShowViewModel.setTvShows(context)
         showLoading(true)
 
         tvShowViewModel.getTvShows().observe(viewLifecycleOwner, Observer { moviesItems ->
             if (moviesItems != null) {
-                listMoviesAdapter.setData(moviesItems)
+                listMoviesAdapter.listMovie = moviesItems
                 showLoading(false)
+//                EspressoIdlingResource.increment()
             }
         })
         rv_list.adapter = listMoviesAdapter
@@ -65,7 +67,7 @@ class TvShowFragment : Fragment() {
 
     private fun showSelectedMovie(listMovieAdapter: ListItemAdapter, index: Int) {
         listMovieAdapter.setOnItemClickCallback(object : ListItemAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Movie) {
+            override fun onItemClicked(data: Movie, position: Int) {
                 goToDetailMovie(data, index)
             }
         })

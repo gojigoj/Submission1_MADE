@@ -30,7 +30,6 @@ class MoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies, container, false) as View
-//        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.tab_title_1)
         requireActivity().tv_toolbar_title.text = resources.getString(R.string.tab_title_1)
         return view
     }
@@ -57,7 +56,7 @@ class MoviesFragment : Fragment() {
 
         movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { moviesItems ->
             if (moviesItems != null) {
-                listMoviesAdapter.setData(moviesItems)
+                listMoviesAdapter.listMovie = moviesItems
                 showLoading(false)
             }
         })
@@ -67,7 +66,7 @@ class MoviesFragment : Fragment() {
 
     private fun showSelectedMovie(listMovieAdapter: ListItemAdapter, index: Int) {
         listMovieAdapter.setOnItemClickCallback(object : ListItemAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Movie) {
+            override fun onItemClicked(data: Movie, position: Int) {
                 goToDetailMovie(data, index)
             }
         })
