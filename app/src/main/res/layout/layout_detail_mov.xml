@@ -5,12 +5,12 @@
     android:id="@+id/layout_detail_mov"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_detail"
-    android:paddingTop="8dp"
-    android:paddingBottom="20dp"
     android:layout_marginStart="24dp"
     android:layout_marginEnd="24dp"
-    android:layout_marginBottom="20dp">
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/shape_detail"
+    android:paddingTop="8dp"
+    android:paddingBottom="20dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -31,45 +31,45 @@
         android:id="@+id/tv_movie_rating"
         style="@style/TextContent.descGroupDetail"
         android:fontFamily="@font/msemibold"
-        tools:text="@string/movie_rating"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/rating_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/rating_title"
+        tools:text="@string/movie_rating" />
 
     <TextView
         android:id="@+id/release_title"
         style="@style/TextContent.descGroupTitle"
         android:text="@string/release_date"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating" />
 
     <TextView
         android:id="@+id/tv_movie_release"
         style="@style/TextContent.descGroupDetail"
-        tools:text="@string/movie_release"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/release_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/release_title"
+        tools:text="@string/movie_release" />
 
     <TextView
         android:id="@+id/runtime_title"
         style="@style/TextContent.descGroupTitle"
         android:text="@string/runtime"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_release"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_release" />
 
     <TextView
         android:id="@+id/tv_movie_time"
         style="@style/TextContent.descGroupDetail"
-        tools:text="@string/movie_time"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/runtime_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/runtime_title"
+        tools:text="@string/movie_time" />
 
     <TextView
         android:id="@+id/genre_title"
         style="@style/TextContent.descGroupTitle"
         android:text="@string/genre"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_time"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_time" />
 
     <TextView
         android:id="@+id/tv_movie_genre"
@@ -87,7 +87,7 @@
         style="@style/TextContent.descGroupTitle"
         android:text="@string/directors"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_genre"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_genre" />
 
     <TextView
         android:id="@+id/tv_movie_directors"
@@ -105,7 +105,7 @@
         style="@style/TextContent.descGroupTitle"
         android:text="@string/writers"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_directors"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_directors" />
 
     <TextView
         android:id="@+id/tv_movie_writers"
@@ -123,7 +123,7 @@
         style="@style/TextContent.descGroupTitle"
         android:text="@string/studio"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_writers"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_writers" />
 
     <TextView
         android:id="@+id/tv_movie_studio"

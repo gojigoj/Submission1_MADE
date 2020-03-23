@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.ItemMoviesFragment">
+    tools:context=".view.fragment.TvShowSearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
@@ -15,11 +15,13 @@
         android:id="@+id/tv_no_data_fav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:text="@string/no_data_favorite"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:padding="32dp"
+        android:fontFamily="@font/mlight"
         android:gravity="center"
-        android:visibility="gone"/>
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:text="@string/no_data_search" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -27,6 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.picodiploma.mysubmission.BuildConfig
 import com.dicoding.picodiploma.mysubmission.model.Movie
-import com.dicoding.picodiploma.mysubmission.util.util
+import com.dicoding.picodiploma.mysubmission.util.Util
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -38,16 +38,21 @@ class ListTvShowViewModel : ViewModel() {
                         val tvSeries = list.getJSONObject(i)
                         val tvSeriesItem = Movie()
                         tvSeriesItem.id = tvSeries.getInt("id")
-                        val linkPoster = tvSeries.getString("poster_path")
-                        tvSeriesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
+                        if (!tvSeries.isNull("poster_path")) {
+                            val linkPoster = tvSeries.getString("poster_path")
+                            tvSeriesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
+                        } else {
+                            tvSeriesItem.poster = "no_image"
+                        }
                         tvSeriesItem.title = tvSeries.getString("name")
                         tvSeriesItem.rating = tvSeries.getDouble("vote_average").toString()
-                        tvSeriesItem.release = util.changeDateFormat(tvSeries.getString("first_air_date"))
+                        tvSeriesItem.release =
+                            Util.changeDateFormat(tvSeries.getString("first_air_date"))
                         listTvSeriesItem.add(tvSeriesItem)
                     }
                     listTvShows.postValue(listTvSeriesItem)
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -63,7 +68,7 @@ class ListTvShowViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })

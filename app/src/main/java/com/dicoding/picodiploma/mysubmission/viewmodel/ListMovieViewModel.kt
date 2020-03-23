@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.picodiploma.mysubmission.BuildConfig
 import com.dicoding.picodiploma.mysubmission.model.Movie
-import com.dicoding.picodiploma.mysubmission.util.util
+import com.dicoding.picodiploma.mysubmission.util.Util
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -38,16 +38,20 @@ class ListMovieViewModel : ViewModel() {
                         val movie = list.getJSONObject(i)
                         val moviesItem = Movie()
                         moviesItem.id = movie.getInt("id")
-                        val linkPoster = movie.getString("poster_path")
-                        moviesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
+                        if (!movie.isNull("poster_path")) {
+                            val linkPoster = movie.getString("poster_path")
+                            moviesItem.poster = "https://image.tmdb.org/t/p/w185$linkPoster"
+                        } else {
+                            moviesItem.poster = "no_image"
+                        }
                         moviesItem.title = movie.getString("title")
                         moviesItem.rating = movie.getDouble("vote_average").toString()
-                        moviesItem.release = util.changeDateFormat(movie.getString("release_date"))
+                        moviesItem.release = Util.changeDateFormat(movie.getString("release_date"))
                         listMovieItems.add(moviesItem)
                     }
                     listMovies.postValue(listMovieItems)
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -63,7 +67,7 @@ class ListMovieViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })

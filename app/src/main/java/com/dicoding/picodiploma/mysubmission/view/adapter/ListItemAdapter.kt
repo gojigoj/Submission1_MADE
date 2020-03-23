@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.dicoding.picodiploma.mysubmission.model.Movie
 import com.dicoding.picodiploma.mysubmission.R
+import com.dicoding.picodiploma.mysubmission.model.Movie
 import kotlinx.android.synthetic.main.item_row_list.view.*
 
 class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ListViewHolder>() {
@@ -53,15 +53,27 @@ class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ListViewHolder>() {
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movie: Movie) {
             with(itemView) {
-                Glide.with(itemView.context)
-                    .load(movie.poster)
-                    .apply(RequestOptions().override(80, 120))
-                    .into(iv_movie_poster)
+                if (movie.poster.equals("no_image")) {
+                    Glide.with(itemView.context)
+                        .load(R.drawable.poster_film)
+                        .apply(RequestOptions().override(80, 120))
+                        .into(iv_movie_poster)
+                } else {
+                    Glide.with(itemView.context)
+                        .load(movie.poster)
+                        .apply(RequestOptions().override(80, 120))
+                        .into(iv_movie_poster)
+                }
                 tv_title.text = movie.title
                 tv_rating.text = resources.getString(R.string.movie_rating, movie.rating)
                 tv_runtime.text = movie.release
 
-                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(movie, adapterPosition) }
+                itemView.setOnClickListener {
+                    onItemClickCallback?.onItemClicked(
+                        movie,
+                        adapterPosition
+                    )
+                }
             }
         }
     }

@@ -1,27 +1,23 @@
 package com.dicoding.picodiploma.mysubmission.viewmodel
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.picodiploma.mysubmission.BuildConfig
 import com.dicoding.picodiploma.mysubmission.model.Movie
-import com.dicoding.picodiploma.mysubmission.util.util
+import com.dicoding.picodiploma.mysubmission.util.Util
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ItemViewModel : ViewModel() {
 
     companion object {
         private const val API_KEY = BuildConfig.TMDB_API_KEY
     }
+
     val itemMovie = MutableLiveData<Movie>()
     val itemTvShows = MutableLiveData<Movie>()
 
@@ -38,10 +34,19 @@ class ItemViewModel : ViewModel() {
                 val result = String(responseBody)
                 try {
                     val responseObject = JSONObject(result)
-                    val linkBackdrop = responseObject.getString("backdrop_path")
-                    data.backdrop = "https://image.tmdb.org/t/p/w185$linkBackdrop"
+                    if (!responseObject.isNull("backdrop_path")) {
+                        val linkBackdrop = responseObject.getString("backdrop_path")
+                        data.backdrop = "https://image.tmdb.org/t/p/w185$linkBackdrop"
+                    } else {
+                        data.backdrop = "no_image"
+                    }
                     data.desc = responseObject.getString("overview")
-                    data.runtime = responseObject.getInt("runtime").toString()
+                    if (!responseObject.isNull("runtime")) {
+                        data.runtime = responseObject.getInt("runtime").toString()
+                    } else {
+                        data.runtime = "0"
+                    }
+
                     val listStudio = responseObject.getJSONArray("production_companies")
                     if (listStudio.length() == 0) {
                         data.studio = "-"
@@ -65,7 +70,7 @@ class ItemViewModel : ViewModel() {
                     }
                     setMovieCredit(context, data)
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -81,7 +86,7 @@ class ItemViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })
@@ -110,18 +115,30 @@ class ItemViewModel : ViewModel() {
                         for (i in 0 until list.length()) {
                             item = list.getJSONObject(i).getString("job")
                             when (item) {
-                                "Director" -> listDirector.add(list.getJSONObject(i).getString("name"))
-                                "Screenplay" -> listWriter.add(list.getJSONObject(i).getString("name"))
+                                "Director" -> listDirector.add(
+                                    list.getJSONObject(i).getString("name")
+                                )
+                                "Screenplay" -> listWriter.add(
+                                    list.getJSONObject(i).getString("name")
+                                )
                                 "Writer" -> listWriter.add(list.getJSONObject(i).getString("name"))
                             }
                         }
-                        data.directors = listDirector.joinToString(separator = ", ")
-                        data.writers = listWriter.joinToString(separator = ", ")
+                        if (listDirector.size == 0) {
+                            data.directors = "-"
+                        } else {
+                            data.directors = listDirector.joinToString(separator = ", ")
+                        }
+                        if (listWriter.size == 0) {
+                            data.writers = "-"
+                        } else {
+                            data.writers = listWriter.joinToString(separator = ", ")
+                        }
                     }
                     itemMovie.postValue(data)
 
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -137,7 +154,7 @@ class ItemViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })
@@ -157,8 +174,12 @@ class ItemViewModel : ViewModel() {
                 val result = String(responseBody)
                 try {
                     val responseObject = JSONObject(result)
-                    val linkBackdrop = responseObject.getString("backdrop_path")
-                    data.backdrop = "https://image.tmdb.org/t/p/w185$linkBackdrop"
+                    if (!responseObject.isNull("backdrop_path")) {
+                        val linkBackdrop = responseObject.getString("backdrop_path")
+                        data.backdrop = "https://image.tmdb.org/t/p/w185$linkBackdrop"
+                    } else {
+                        data.backdrop = "no_image"
+                    }
                     data.desc = responseObject.getString("overview")
                     val runtimePerEpisode = responseObject.getJSONArray("episode_run_time")
                     data.runtime = runtimePerEpisode[0].toString()
@@ -197,7 +218,7 @@ class ItemViewModel : ViewModel() {
                     setTvShowsCredit(context, data)
 
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -213,7 +234,7 @@ class ItemViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })
@@ -233,24 +254,28 @@ class ItemViewModel : ViewModel() {
                 val result = String(responseBody)
                 try {
                     val responseObject = JSONObject(result)
-                    val list = responseObject.getJSONArray("cast")
-                    if (list.length() == 0) {
-                        data.writers = "-"
-                    } else {
-                        if (list.length() > 2) {
-                            for (i in 0 until 3) {
-                                listCast.add(list.getJSONObject(i).getString("name"))
-                            }
+                    if (!responseObject.isNull("cast")) {
+                        val list = responseObject.getJSONArray("cast")
+                        if (list.length() == 0) {
+                            data.writers = "-"
                         } else {
-                            for (i in 0 until list.length()) {
-                                listCast.add(list.getJSONObject(i).getString("name"))
+                            if (list.length() > 2) {
+                                for (i in 0 until 3) {
+                                    listCast.add(list.getJSONObject(i).getString("name"))
+                                }
+                            } else {
+                                for (i in 0 until list.length()) {
+                                    listCast.add(list.getJSONObject(i).getString("name"))
+                                }
                             }
+                            data.writers = listCast.joinToString(separator = ", ")
                         }
-                        data.writers = listCast.joinToString(separator = ", ")
+                    } else {
+                        data.writers = "-"
                     }
                     itemTvShows.postValue(data)
                 } catch (e: Exception) {
-                    util.showToast(context, e.message.toString())
+                    Util.showToast(context, e.message.toString())
                     e.printStackTrace()
                 }
             }
@@ -266,7 +291,7 @@ class ItemViewModel : ViewModel() {
                     404 -> "$statusCode: The resource you requested could not be found."
                     else -> "$statusCode: ${error.message}"
                 }
-                util.showToast(context, errorMessage)
+                Util.showToast(context, errorMessage)
             }
 
         })

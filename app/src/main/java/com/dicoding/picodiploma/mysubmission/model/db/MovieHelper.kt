@@ -15,7 +15,7 @@ class MovieHelper(context: Context) {
         private const val DATABASE_TABLE = TABLE_NAME
         private lateinit var databaseHelper: DatabaseHelper
         private lateinit var database: SQLiteDatabase
-        private var INSTANCE:MovieHelper? = null
+        private var INSTANCE: MovieHelper? = null
 
         fun getInstance(context: Context): MovieHelper =
             INSTANCE ?: synchronized(this) {
@@ -33,7 +33,7 @@ class MovieHelper(context: Context) {
         database = databaseHelper.writableDatabase
     }
 
-    fun close(){
+    fun close() {
         databaseHelper.close()
 
         if (database.isOpen) {

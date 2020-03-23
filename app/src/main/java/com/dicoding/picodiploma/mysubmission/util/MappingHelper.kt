@@ -15,7 +15,15 @@ object MappingHelper {
                 val title = getString(getColumnIndexOrThrow(MovieFavColumns.TITLE))
                 val rating = getString(getColumnIndexOrThrow(MovieFavColumns.RATING))
                 val release = getString(getColumnIndexOrThrow(MovieFavColumns.RELEASE))
-                movieList.add(Movie(id = id, poster = poster, title = title, rating = rating, release = release))
+                movieList.add(
+                    Movie(
+                        id = id,
+                        poster = poster,
+                        title = title,
+                        rating = rating,
+                        release = release
+                    )
+                )
             }
         }
         return movieList

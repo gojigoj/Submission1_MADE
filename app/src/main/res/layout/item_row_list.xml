@@ -12,16 +12,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
         android:background="@drawable/shape_item"
-        android:elevation="1dp">
+        android:elevation="1dp"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/iv_movie_poster"
             android:layout_width="80dp"
             android:layout_height="120dp"
             android:layout_marginEnd="20dp"
+            android:contentDescription="@string/poster_film"
             android:src="@drawable/poster_film" />
 
         <LinearLayout
@@ -36,32 +37,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:fontFamily="@font/msemibold"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
                 android:maxLines="2"
-                tools:text="@string/movie_title"/>
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                tools:text="@string/movie_title" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/rating"
                     android:src="@drawable/rating_icon" />
 
                 <TextView
                     android:id="@+id/tv_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:fontFamily="@font/mmedium"
                     android:textColor="@android:color/white"
-                    tools:text="@string/movie_rating"/>
+                    android:textSize="16sp"
+                    tools:text="@string/movie_rating" />
 
             </LinearLayout>
 
@@ -75,17 +77,18 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="10dp"
-                    android:backgroundTint="@android:color/white"
-                    android:background="@drawable/ic_date_range"/>
+                    android:contentDescription="@string/release_date"
+                    android:background="@drawable/ic_date_range"
+                    android:backgroundTint="@android:color/white" />
 
                 <TextView
                     android:id="@+id/tv_runtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:fontFamily="@font/mmedium"
                     android:textColor="@android:color/white"
-                    tools:text="@string/movie_release"/>
+                    android:textSize="16sp"
+                    tools:text="@string/movie_release" />
 
             </LinearLayout>
 

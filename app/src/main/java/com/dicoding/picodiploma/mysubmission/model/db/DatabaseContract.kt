@@ -4,7 +4,7 @@ import android.provider.BaseColumns
 
 internal class DatabaseContract {
 
-    internal class MovieFavColumns : BaseColumns{
+    internal class MovieFavColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "movie_favorite"
             const val _ID = "_id"

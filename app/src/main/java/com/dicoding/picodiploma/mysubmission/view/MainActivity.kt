@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.mysubmission.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dicoding.picodiploma.mysubmission.R
 import com.dicoding.picodiploma.mysubmission.model.db.MovieHelper
-import com.dicoding.picodiploma.mysubmission.view.adapter.SectionPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,15 +34,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_languange, menu)
-
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.languange) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.setting -> {
+                val settingIntent = Intent(this@MainActivity, SettingsActivity::class.java)
+                startActivity(settingIntent)
+//                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+//                startActivity(mIntent)
+            }
+            R.id.search -> {
+                val searchIntent = Intent(this@MainActivity, SearchActivity::class.java)
+                startActivity(searchIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -9,7 +9,13 @@
     <string name="menu_2">Indonesia</string>
 
     <string name="choose_lang">Choose language</string>
-    <string name="search">Search Title</string>
+    <string name="search">Search</string>
+    <string name="search_title">Search %1$s</string>
+
+    <string name="success_insert_data">One item successfully inserted</string>
+    <string name="success_delete_data">One item successfully deleted</string>
+    <string name="failed_insert_data">Failed to insert item</string>
+    <string name="failed_delete_data">Failed to delete item</string>
 
     <string name="app_title">MyMov</string>
     <string name="movie_title">Spider-Man: Into the Spider-Verse</string>
@@ -35,7 +41,8 @@
     <string name="rating">Rating</string>
     <string name="poster_film">Movie poster</string>
     <string name="icon_app">Icon App</string>
-    <string name="no_data_favorite">There are no favorite %1$s</string>
+    <string name="no_data_favorite">There are no favorite %1$s.</string>
+    <string name="no_data_search">There are no %1$s that matched your query.</string>
 
     <string name="content_tab_text">This is tab</string>
 

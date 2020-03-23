@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -17,11 +16,10 @@ import com.dicoding.picodiploma.mysubmission.model.Movie
 import com.dicoding.picodiploma.mysubmission.model.db.DatabaseContract
 import com.dicoding.picodiploma.mysubmission.model.db.MovieHelper
 import com.dicoding.picodiploma.mysubmission.util.EspressoIdlingResource
-import com.dicoding.picodiploma.mysubmission.util.util
+import com.dicoding.picodiploma.mysubmission.util.Util
 import com.dicoding.picodiploma.mysubmission.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.layout_detail_mov.*
-import kotlin.math.log
 
 class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -113,21 +111,40 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initView(movie: Movie) {
-        Glide
-            .with(this)
-            .load(movie.poster)
-            .into(iv_movie_poster)
+        if (movie.poster.equals("no_image")) {
+            Glide
+                .with(this)
+                .load(R.drawable.poster_film)
+                .into(iv_movie_poster)
+        } else {
+            Glide
+                .with(this)
+                .load(movie.poster)
+                .into(iv_movie_poster)
+        }
 
-        Glide
-            .with(this)
-            .load(movie.backdrop)
-            .into(iv_movie_backdrop)
+        if (movie.backdrop.equals("no_image")) {
+            Glide
+                .with(this)
+                .load(R.drawable.backdrop_film)
+                .into(iv_movie_backdrop)
+        } else {
+            Glide
+                .with(this)
+                .load(movie.backdrop)
+                .into(iv_movie_backdrop)
+        }
+
 
         tv_movie_title.text = movie.title
         tv_movie_desc.text = movie.desc
         tv_movie_rating.text = resources.getString(R.string.movie_rating, movie.rating)
         tv_movie_release.text = movie.release
-        tv_movie_time.text = resources.getString(R.string.movie_time, movie.runtime)
+        if (movie.runtime.equals("0")) {
+            tv_movie_time.text = "-"
+        } else {
+            tv_movie_time.text = resources.getString(R.string.movie_time, movie.runtime)
+        }
         tv_movie_genre.text = movie.genre
         tv_movie_directors.text = movie.directors
         tv_movie_writers.text = movie.writers
@@ -146,7 +163,8 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     private fun checkFav(id: Int?): Boolean {
         val cursor = movieHelper.queryById(id.toString())
         return if (cursor.moveToFirst()) {
-            val idDb = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MovieFavColumns._ID))
+            val idDb =
+                cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MovieFavColumns._ID))
             idDb == id
         } else {
             false
@@ -180,7 +198,13 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                 val rating = movie.rating
                 val release = movie.release
 
-                movie = Movie(id = id, poster = poster, title = title, rating = rating, release = release)
+                movie = Movie(
+                    id = id,
+                    poster = poster,
+                    title = title,
+                    rating = rating,
+                    release = release
+                )
 
                 val intent = Intent()
                 intent.putExtra(EXTRA_SELECTED_VALUE, movie)
@@ -202,10 +226,10 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                     isFavorite = true
                     btnSetFav(isFavorite)
                     setResult(RESULT_ADD, intent)
-                    util.showToast(applicationContext, "Satu item berhasil ditambah")
+                    Util.showToast(applicationContext, resources.getString(R.string.success_insert_data))
                     finish()
-                }  else {
-                    util.showToast(this, "Gagal menambah data")
+                } else {
+                    Util.showToast(this, resources.getString(R.string.failed_insert_data))
                 }
             } else {
                 val result = movieHelper.deleteById(movie.id.toString()).toLong()
@@ -218,10 +242,10 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                     intent.putExtra(EXTRA_POSITION, position)
                     intent.putExtra(EXTRA_TYPE, index)
                     setResult(RESULT_DELETE, intent)
-                    util.showToast(applicationContext, "Satu item berhasil dihapus")
+                    Util.showToast(applicationContext, resources.getString(R.string.success_delete_data))
                     finish()
                 } else {
-                    util.showToast(this, "Gagal menghapus data")
+                    Util.showToast(this, resources.getString(R.string.failed_delete_data))
                 }
             }
         }
